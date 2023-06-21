@@ -12,6 +12,50 @@
 
 ## [동우](./%EC%BF%A0%ED%82%A4%EC%9D%98%20%EC%8B%A0%EC%B2%B4%20%EC%B8%A1%EC%A0%95/%EB%8F%99%EC%9A%B0.py)
 ```py
+import sys
+input = sys.stdin.readline
+
+N = int(input())
+arr = [input().strip() for _ in range(N)]
+
+h_i, h_j = 0, 0                     # 심장 위치 찾기
+for i in range(N):
+    if h_i and h_j:                 # 머리를 찾으면 멈춰
+        break
+    for j in range(N):
+        if arr[i][j] == '*':
+            h_i, h_j = i + 1, j     # 심장 위치
+            break
+
+l_a, r_a, w, l_l, r_l = 0, 0, 0, 0, 0       # 왼쪽 팔, 오른쪽 팔, 허리, 왼쪽 다리, 오른쪽 다리 선언 및 초기화
+for l_a_j in range(h_j - 1, -1, -1):        # 심장을 기준으로 하나씩 왼쪽으로 이동
+    if arr[h_i][l_a_j] != '*':              # 신체 부위가 아니면 멈춰
+        break
+    l_a += 1
+
+for r_a_j in range(h_j + 1, N):             # 심장을 기준으로 한나씩 오른쪽으로 이동
+    if arr[h_i][r_a_j] != '*':
+        break
+    r_a += 1
+
+for w_i in range(h_i + 1, N):               # 심장을 기준으로 하나씩 아래로 이동
+    if arr[w_i][h_j] != '*':
+        break
+    w += 1
+
+for l_l_i in range(h_i + w + 1, N):         # 허리가 끝나는 부분을 기준으로 하나씩 아래로 이동
+    if arr[l_l_i][h_j - 1] != '*':          # 왼쪽 다리. 허리 기준 -1
+        break
+    l_l += 1
+
+for l_l_i in range(h_i + w + 1, N):
+    if arr[l_l_i][h_j + 1] != '*':          # 오른쪽 다리. 허리 기준 +1
+        break
+    r_l += 1
+
+print(h_i + 1, h_j + 1)
+print(l_a, r_a, w, l_l, r_l)
+
 ```
 
 ## [민웅](./%EC%BF%A0%ED%82%A4%EC%9D%98%20%EC%8B%A0%EC%B2%B4%20%EC%B8%A1%EC%A0%95/%EB%AF%BC%EC%9B%85.py)
