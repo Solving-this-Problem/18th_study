@@ -55,7 +55,6 @@ for l_l_i in range(h_i + w + 1, N):
 
 print(h_i + 1, h_j + 1)
 print(l_a, r_a, w, l_l, r_l)
-
 ```
 
 ## [민웅](./%EC%BF%A0%ED%82%A4%EC%9D%98%20%EC%8B%A0%EC%B2%B4%20%EC%B8%A1%EC%A0%95/%EB%AF%BC%EC%9B%85.py)
@@ -134,6 +133,36 @@ print(*length_of(heart))
 
 ## [동우](./%EC%B0%BD%EA%B3%A0%20%EB%8B%A4%EA%B0%81%ED%98%95/%EB%8F%99%EC%9A%B0.py)
 ```py
+import sys
+input = sys.stdin.readline
+
+N = int(input())
+arr = [list(map(int, input().strip().split())) for _ in range(N)]
+arr.sort()
+
+
+maxX = arr[-1][0]                           # 창고 최대 가로 폭
+maxY, maxIdx = 0, 0                         # 기둥 최대 높이와 위치
+for i in range(N):
+    if maxY < arr[i][1]:
+        maxY, maxIdx = arr[i][1], arr[i][0]
+
+tmp = [0] * (maxX + 1)
+for x, y in arr:
+    tmp[x] = y                              # 창고의 모든 기둥 적어두기
+
+total, left, right = 0, 0, 0
+for i in range(maxIdx + 1):                 # 최대 기둥 위치를 기준으로 왼쪽 넓이 구하기
+    if tmp[i] > left:                       # 기존 기둥보다 높은 기둥이 생길 때마다 갱신해주기
+        left = tmp[i]
+    total += left                           # 기둥들 누적 합
+
+for j in range(maxX, maxIdx, -1):           # 오른쪽 넓이 구하기
+    if tmp[j] > right:
+        right = tmp[j]
+    total += right
+
+print(total)
 ```
 
 ## [민웅](./%EC%B0%BD%EA%B3%A0%20%EB%8B%A4%EA%B0%81%ED%98%95/%EB%AF%BC%EC%9B%85.py)
