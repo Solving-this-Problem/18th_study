@@ -59,6 +59,50 @@ print(l_a, r_a, w, l_l, r_l)
 
 ## [민웅](./%EC%BF%A0%ED%82%A4%EC%9D%98%20%EC%8B%A0%EC%B2%B4%20%EC%B8%A1%EC%A0%95/%EB%AF%BC%EC%9B%85.py)
 ```py
+# 20125_쿠키의신체측정_Cookie
+import sys
+input = sys.stdin.readline
+
+N = int(input())
+
+field = [list(map(str, input())) for _ in range(N)]
+
+heart = False
+body_end = False
+belly = 0
+for i in range(N):
+    for j in range(N):
+        if field[i][j] == '*':
+            heart = [i+2, j+1]
+            nx, ny = i, j
+            while field[nx][ny] == '*':
+                nx += 1
+                belly += 1
+            body_end = [nx, ny]
+            break
+    if heart:
+        break
+
+[x, y] = heart
+ans = []
+cnt1, cnt2, cnt3, cnt4 = 0, 0, 0, 0
+for i in range(y-1):
+    if field[x-1][i] == '*':
+        cnt1 += 1
+
+for i in range(y, N):
+    if field[x-1][i] == '*':
+        cnt2 += 1
+
+for i in range(body_end[0], N):
+    if field[i][body_end[1]-1] == '*':
+        cnt3 += 1
+
+for i in range(body_end[0], N):
+    if field[i][body_end[1]+1] == '*':
+        cnt4 += 1
+print(x, y)
+print(cnt1, cnt2, belly-2, cnt3, cnt4)
 ```
 
 ## [서희](./%EC%BF%A0%ED%82%A4%EC%9D%98%20%EC%8B%A0%EC%B2%B4%20%EC%B8%A1%EC%A0%95/%EC%84%9C%ED%9D%AC.py)
@@ -167,6 +211,63 @@ print(total)
 
 ## [민웅](./%EC%B0%BD%EA%B3%A0%20%EB%8B%A4%EA%B0%81%ED%98%95/%EB%AF%BC%EC%9B%85.py)
 ```py
+# 2304_창고다각형_warehouse-Polygon
+# 오답이유 찾는중
+import sys
+input = sys.stdin.readline
+
+N = int(input())
+
+ans = 0
+
+rect = []
+
+cursor = 0
+height = 0
+max_h = 0
+max_h_idx = 0
+
+for _ in range(N):
+    L, H = map(int, input().rstrip().split())
+    if H >= max_h:
+        max_h = H
+        max_h_idx = L
+    rect.append([L, H])
+
+rect.sort(key=lambda x: x[0])
+
+
+idx = 0
+while height != max_h:
+    l, h = rect[idx][0], rect[idx][1]
+    if h > height:
+        ans += height*(l-cursor)
+        cursor = l
+        height = h
+        idx += 1
+    else:
+        idx += 1
+
+if cursor != max_h_idx:
+    ans += max_h*(max_h_idx - cursor + 1)
+else:
+    ans += max_h
+
+idx = N-1
+height = 0
+cursor = 0
+while height != max_h:
+    l, h = rect[idx][0], rect[idx][1]
+    if h > height:
+        ans += height * (cursor - l)
+        cursor = l
+        height = h
+        idx -= 1
+    else:
+        idx -= 1
+
+print(ans)
+
 ```
 
 ## [서희](./%EC%B0%BD%EA%B3%A0%20%EB%8B%A4%EA%B0%81%ED%98%95/%EC%84%9C%ED%9D%AC.py)
