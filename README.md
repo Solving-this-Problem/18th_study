@@ -334,6 +334,76 @@ print(dimension)
 
 ## [민웅](./%EB%B6%88!/%EB%AF%BC%EC%9B%85.py)
 ```py
+# 4179_불_fire!
+# 11% 틀렸습니다 원인 찾는중
+import sys
+from collections import deque
+input = sys.stdin.readline
+
+dxy = [(0, 1), (0, -1), (1, 0), (-1, 0)]
+
+R, C = map(int, input().split())
+
+maze = [list(map(str, input())) for _ in range(R)]
+
+s = []
+f = []
+visited = [[-1]*C for _ in range(R)]
+ans = 0
+for i in range(R):
+    for j in range(C):
+        if maze[i][j] == 'J':
+            s = [i, j]
+        elif maze[i][j] == 'F':
+            f.append([i, j])
+            visited[i][j] = 1
+        elif maze[i][j] == '.':
+            visited[i][j] = 0
+
+
+q = deque()
+for v in f:
+    q.append(f.pop())
+
+    while q:
+        x, y = q.popleft()
+
+        for d in dxy:
+            nx = x + d[0]
+            ny = y + d[1]
+
+            if 0 <= nx <= R-1 and 0 <= ny <= C-1:
+                # 처음에 maze[nx][ny] == '.' 으로해서 J 위치 마킹못함
+                if maze[nx][ny] != '#' and visited[nx][ny] == 0:
+                    visited[nx][ny] = visited[x][y] + 1
+                    q.append([nx, ny])
+
+s.append(0)
+q.append(s)
+
+visited2 = [[0]*C for _ in range(R)]
+while q:
+    x, y, dis = q.popleft()
+
+    for d in dxy:
+        nx = x + d[0]
+        ny = y + d[1]
+
+        if 0 <= nx <= R-1 and 0 <= ny <= C-1:
+            if (visited[nx][ny] >= dis+1 or visited[nx][ny] == 0) and visited2[nx][ny] == 0:
+                visited2[nx][ny] = 1
+                q.append([nx, ny, dis+1])
+        else:
+            ans = dis+1
+            q = []
+            break
+
+if ans == 0:
+    ans = 'IMPOSSIBLE'
+
+print(ans)
+
+
 ```
 
 ## [서희](./%EB%B6%88!/%EC%84%9C%ED%9D%AC.py)
