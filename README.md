@@ -204,6 +204,51 @@ print(*length_of(heart))
 
 ## [혜진](./%EC%BF%A0%ED%82%A4%EC%9D%98%20%EC%8B%A0%EC%B2%B4%20%EC%B8%A1%EC%A0%95/%ED%98%9C%EC%A7%84.py)
 ```py
+
+N = int(input())
+cookie = []
+for _ in range(N):
+    cookie.append(input())
+
+x, y = 0, 0
+flag = 0
+leftarm, leftleg, rightarm, rightleg, back= 0, 0, 0, 0, 0
+# 심장 찾기
+for i in range(N):
+    for j in range(N):
+        if cookie[i][j] == '*':
+            x, y = i + 2, j + 1
+            print(x, y)
+            flag = 1
+            break
+    if flag:
+        break
+# 오른팔
+for i in range(y - 1):
+    if cookie[x-1][i] == '*':
+        leftarm += 1
+# 왼팔
+for i in range(y, N):
+    if cookie[x-1][i] == '*':
+        rightarm += 1
+# 허리
+for i in range(x, N):
+    if cookie[i][y-1] == '*':
+        back += 1
+    else:
+        x = i
+        break
+
+# 오른 다리
+for i in range(x - 1, N):
+    if cookie[i][y - 2] == '*':
+        leftleg += 1
+
+for i in range(x-1, N):
+    if cookie[i][y] == '*':
+        rightleg += 1
+
+print(leftarm, rightarm, back, leftleg, rightleg)
 ```
 
 </div>
@@ -391,6 +436,46 @@ print(dimension)
 
 ## [혜진](./%EC%B0%BD%EA%B3%A0%20%EB%8B%A4%EA%B0%81%ED%98%95/%ED%98%9C%EC%A7%84.py)
 ```py
+box = [0 for _ in range(1001)]
+maxv = 0
+N = int(input())
+for _ in range(N):
+    a, b = map(int, input().split())
+    box[a] = b
+    if maxv < b:
+        maxv = b
+        max_idx = a
+
+total, now = box[max_idx], 0
+# total 누적합 / now 해당 인덱스의 값
+maxV = 0
+
+# 처음부터 최대 높이까지
+for i in range(max_idx):
+    if box[i]:
+        if maxV < box[i]:
+            maxV = box[i]
+            now = box[i]
+            total += now
+        else:
+            total += now
+    else:
+        total += now
+
+# 맨 뒤에서 최대 높이까지
+maxV, now = 0, 0
+for i in range(1000,max_idx,-1):
+    if box[i]:
+        if maxV < box[i]:
+            maxV = box[i]
+            now = box[i]
+            total += now
+        else:
+            total += now
+    else:
+        total += now
+
+print(total)
 ```
 
 </div>
