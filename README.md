@@ -223,11 +223,11 @@ for i in range(N):
             break
     if flag:
         break
-# 오른팔
+# 왼팔
 for i in range(y - 1):
     if cookie[x-1][i] == '*':
         leftarm += 1
-# 왼팔
+# 오른팔
 for i in range(y, N):
     if cookie[x-1][i] == '*':
         rightarm += 1
@@ -239,11 +239,11 @@ for i in range(x, N):
         x = i
         break
 
-# 오른 다리
+# 왼쪽 다리
 for i in range(x - 1, N):
     if cookie[i][y - 2] == '*':
         leftleg += 1
-
+# 오른쪽 다리
 for i in range(x-1, N):
     if cookie[i][y] == '*':
         rightleg += 1
