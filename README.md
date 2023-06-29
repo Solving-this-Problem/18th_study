@@ -107,6 +107,46 @@ print(cnt1, cnt2, belly-2, cnt3, cnt4)
 
 ## [서희](./%EC%BF%A0%ED%82%A4%EC%9D%98%20%EC%8B%A0%EC%B2%B4%20%EC%B8%A1%EC%A0%95/%EC%84%9C%ED%9D%AC.py)
 ```py
+N = int(input())
+
+pattern = []
+for _ in range(N):
+    pattern.append(list(input()))
+
+# 1. Find the head
+for i in range(N):
+    for j in range(N):
+        if pattern[i][j] == "*":
+            head = (i, j)
+            break
+    else:
+        continue
+    break
+
+
+heart = (head[0] + 1, head[1])
+
+l_arm, r_arm, waist, l_leg, r_leg = 0, 0, 0, 0, 0
+i, j = heart
+
+while  j-1-l_arm >= 0 and pattern[i][j-1-l_arm] == '*':
+    l_arm += 1
+
+while j+1+r_arm < N and  pattern[i][j+1+r_arm] == '*':
+    r_arm += 1
+
+while i+1+waist < N and  pattern[i+1+waist][j] == '*':
+    waist += 1
+
+while i+1+waist+l_leg < N and pattern[i+1+waist+l_leg][j-1] == '*':
+    l_leg += 1
+
+while i+1+waist+r_leg < N and pattern[i+1+waist+r_leg][j+1] == '*':
+    r_leg += 1
+
+print(*map(lambda x: x+1, heart)) 
+print(l_arm, r_arm, waist, l_leg, r_leg)
+
 ```
 
 ## [성구](./%EC%BF%A0%ED%82%A4%EC%9D%98%20%EC%8B%A0%EC%B2%B4%20%EC%B8%A1%EC%A0%95/%EC%84%B1%EA%B5%AC.py)
@@ -272,6 +312,40 @@ print(ans)
 
 ## [서희](./%EC%B0%BD%EA%B3%A0%20%EB%8B%A4%EA%B0%81%ED%98%95/%EC%84%9C%ED%9D%AC.py)
 ```py
+N = int(input())
+arr = [0]*1001 
+
+max_L = 0
+max_H = 0
+max_H_idx = 0
+
+for _ in range(N):
+    L, H = map(int, input().split())
+    arr[L] = H
+    if max_H < H:
+        max_H = H
+        max_H_idx = L
+    max_L = max(max_L, L)
+
+area = 0
+temp_H = 0
+
+
+for i in range(max_H_idx+1):
+    if arr[i] > temp_H:
+        temp_H = arr[i]
+    area += temp_H
+
+temp_H = 0
+
+
+for i in range(max_L, max_H_idx, -1):
+    if arr[i] > temp_H:
+        temp_H = arr[i]
+    area += temp_H
+
+print(area)
+
 ```
 
 ## [성구](./%EC%B0%BD%EA%B3%A0%20%EB%8B%A4%EA%B0%81%ED%98%95/%EC%84%B1%EA%B5%AC.py)
